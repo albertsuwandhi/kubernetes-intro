@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1     
+kind: Deployment                   
+metadata:
+  name: web                      
+spec:
+  minReadySeconds: 10
+  replicas: 5
+  template:
+    metadata:
+      name: web
+      labels:
+        app: web
+    spec:
+      containers:
+      - image: albertsuwandhi/simpleweb:v1
+        name: flask
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  type: LoadBalancer
+  selector:
+    app: web
+  ports:
+  - port: 80
+    targetPort: 8080

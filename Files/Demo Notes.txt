@@ -1,0 +1,49 @@
+﻿1. kubectl get componentstatuses
+2. kubectl cluster-info
+3. kubectl get nodes
+---------------------------------------------------------------
+1. kubectl run web --image=albertsuwandhi/simpleweb:v1 --port=8080 --generator=run/v1
+2. kubectl get pods
+3. kubectl get pods [PODNAME] -o yaml
+4. kubectl get rc
+5. kubectl get rc [RCNAME] - o yaml
+6. kubectl expose rc web --type=LoadBalancer --name web-server
+7. kubectl get svc
+8. kubectl get svc [SVCNAME] - o yaml
+9. kubectl scale rc web --replicas=5
+10.Access using Web Browser on the public IP
+-----------------------------------------------------------------------
+1. kubectl create -f web-deployment-v1.yaml --record
+2. kubectl get svc --> get EXT_IP
+3. while true; do curl http://[EXT_IP];echo;sleep 1;done
+4. kubectl update image deployment web flask=albertsuwanshi/simpleweb:v2
+5. See in terminal the rolling update process
+6. kubectl rollout history deployment web
+-----------------------------------------------------------------------
+1. kubectl proxy
+2. open localhost:8001
+3. See all the pods : http://localhost:8001/api/v1/namespaces/default/pods
+-------------------------------------------------------------------------
+
+1. kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+2. kubectl apply -f admin-user.yaml
+
+3. kubectl get secret -n kube-system
+
+4. kubectl proxy
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+
+other way to create SA and role binding
+
+kubectl -n kube-system create serviceaccount albert
+
+kubectl create clusterrolebinding albert —cluster-role cluster-admin —serviceaccount=kube-system:albert
+-----------------------------------------------------------------------
+1. helm init --client-only; helm repo update
+2. helm install stable/prometheus --set server.service.type=NodePort --set server.persistentVolume.enabled=false => see the resources created
+3. kubectl get svc => Browse to Node Port
+
+
+
